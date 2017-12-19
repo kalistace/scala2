@@ -41,8 +41,19 @@ object Lists {
     * @throws java.util.NoSuchElementException if `xs` is an empty list
     */
   def max(xs: List[Int]): Int = {
-    xs.head > max(xs.tail) {
-      xs.head
+    checkNonEmptyList(xs)
+    val head = xs.head
+    val tail = xs.tail
+    if (tail.isEmpty) head
+    else {
+      val maxTail = max(tail)
+      if (head > maxTail) head else maxTail
+    }
+  }
+
+  private def checkNonEmptyList(xs: List[Int]) = {
+    if (xs.isEmpty) {
+      throw new NoSuchElementException
     }
   }
 }
